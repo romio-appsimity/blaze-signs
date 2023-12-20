@@ -54,16 +54,27 @@ form.contact-us{
 .dw-line img{width: 100%;}
 
 .information-lk {
-    padding: 9px 30px;
+    padding: 10px 30px;
     background: #f2f2f2;
     border-radius:22px;
     color: #000;
     position: absolute;
     top:50%;
-   left: 100px;
+   left: 140px;
     transform: translateY(-50%);
     z-index: 1;
 }
+.information-lk ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; 
+  }
+  
+  .information-lk span {
+    margin-right: 5px; 
+  }
+  
+  
 .information-lk li {
     display:flex;
     text-align: center;
@@ -160,7 +171,23 @@ form.contact-us h3 {
     width: calc(100% - 5px); 
     margin-right: 10px;
   }
-  
+  #lname {
+    width: calc(100% - 0px); 
+    margin-right: 0;
+  }
+
+  #cit {
+    width: calc(100% - 0px); 
+    margin-right: 0;
+  }
+  #pcode {
+    width: calc(100% - 0px); 
+    margin-right: 0;
+  }
+  #eadd {
+    width: calc(100% - 0px); 
+    margin-right: 0;
+  }
   .form-group input:last-child {
     margin-right: 0;
   }
@@ -170,4 +197,21 @@ form.contact-us h3 {
     right: 0;
     z-index: 9999;
   }
+  .icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; 
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid #333; 
+    border-radius: 50%;
+    margin-right: 10px; 
+  }
+  
+  .icon-circle svg {
+    color: #333; 
+  }
+  
+  
   

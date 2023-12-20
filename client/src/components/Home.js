@@ -203,7 +203,7 @@ function Home() {
              </div>   
 
            <div class="form-group col-md-6"> 
-              <input type="text" id="" name="city" placeholder="City" value={contactDetails.city} onChange={handleInputChange} />
+              <input type="text" id="cit" name="city" placeholder="City" value={contactDetails.city} onChange={handleInputChange} />
            </div>
 
        </div>
@@ -214,7 +214,7 @@ function Home() {
              </div>   
 
            <div class="form-group col-md-6"> 
-              <input type="text" id="" name="postalCode" placeholder="Postal Code"  value={contactDetails.postalCode} onChange={handleInputChange}/>
+              <input type="text" id="pcode" name="postalCode" placeholder="Postal Code"  value={contactDetails.postalCode} onChange={handleInputChange}/>
            </div>
 
        </div>
@@ -225,7 +225,7 @@ function Home() {
              </div>   
 
            <div class="form-group col-md-6"> 
-              <input type="text" id="" name="emailAddress" placeholder="Email Address" value={contactDetails.emailAddress} onChange={handleInputChange} />
+              <input type="text" id="eadd" name="emailAddress" placeholder="Email Address" value={contactDetails.emailAddress} onChange={handleInputChange} />
            </div>
 
        </div>
