@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6fa1ba93.css",
+    "main.js": "/static/js/main.fee730a9.js",
+    "static/js/787.d5fa4d18.chunk.js": "/static/js/787.d5fa4d18.chunk.js",
+    "static/media/n1.jpg": "/static/media/n1.216f069efcb6350428d1.jpg",
+    "static/media/Blaze-Signs-Logo1.png": "/static/media/Blaze-Signs-Logo1.ee406324cc0b7cd66abc.png",
+    "index.html": "/index.html",
+    "main.6fa1ba93.css.map": "/static/css/main.6fa1ba93.css.map",
+    "main.fee730a9.js.map": "/static/js/main.fee730a9.js.map",
+    "787.d5fa4d18.chunk.js.map": "/static/js/787.d5fa4d18.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6fa1ba93.css",
+    "static/js/main.fee730a9.js"
+  ]
+}
