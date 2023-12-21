@@ -11,8 +11,10 @@ const contactSchema = new mongoose.Schema({
   province: { type: String, required: true },
   postalCode: { type: String, required: true },
   contactNumber: { type: String, required: true, match: /^\d{10}$/ }, 
-  emailAddress: { type: String, required: true, unique: true, match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ }, 
+  emailAddress: { type: String, required: true, match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ }, 
   message: { type: String, required: true },
+  file: { type: Buffer, default: null }, 
+  fileType: { type: String, default: null },
 });
 
 const Contact = mongoose.model('Contact', contactSchema);
