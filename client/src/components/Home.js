@@ -11,7 +11,9 @@ import 'tailwindcss/tailwind.css';
 import axios from 'axios';
 
 function Home() {
-  const [brochureError, setBrochureError] = useState(null);
+  // eslint-disable-next-line
+const [brochureError, setBrochureError] = useState(null);
+
   const [contactDetails, setContactDetails] = useState({
     companyName: '',
     firstName: '',
