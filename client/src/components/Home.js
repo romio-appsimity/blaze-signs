@@ -9,6 +9,7 @@ import BlazeSignsLogo from '../imgs/Blaze-Signs-Logo1.png';
 import { toast, ToastContainer } from 'react-toastify';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
+import Url from '../config/api';
 
 function Home() {
   // eslint-disable-next-line
@@ -45,7 +46,7 @@ const [brochureError, setBrochureError] = useState(null);
         formData.append(key, contactDetails[key]);
       }
 
-      const response = await axios.post('http://localhost:8000/contact/contacts', formData, {
+      const response = await axios.post(`${Url}/contact/contacts`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -90,22 +91,32 @@ const [brochureError, setBrochureError] = useState(null);
         pauseOnHover: true,
         draggable: true,
       });
-      setTimeout(() => {
+      
         window.location.reload();
-      }, 3000);
+     
     }
   };
-  const handleViewBrochure = () => {
-   
-    const pdfUrl = 'https://drive.google.com/file/d/18fCOTIDjZaY32DKXLrWGZejMvOMpSPf3/view?usp=sharing';
-    window.open(pdfUrl, '_blank');
+  
+  const handleViewBrochure = async () => {
+    try {
+      const response = await axios.get(`${Url}/contact/pdf`, {
+        responseType: 'blob',
+      });
+
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error('Error viewing brochure:', error.message);
+      setBrochureError('Error viewing brochure. Please try again later.');
+    }
   };
   
   
 
   const handleDownloadBrochure = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/contact/download-brochure', {
+      const response = await axios.get(`${Url}/contact/download-brochure`, {
         responseType: 'blob', 
       });
 

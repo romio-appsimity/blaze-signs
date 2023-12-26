@@ -104,6 +104,19 @@ router.get('/download-brochure', (req, res) => {
   });
 });
 
+router.get('/pdf', (req, res) => {
+  try {
+    const pdfPath = path.join(__dirname, '..', 'public', 'BlazeSigns-CompanyProfile.pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=BlazeSigns-CompanyProfile.pdf`);
+    res.contentType('application/pdf');
+    res.sendFile(pdfPath);
+  } catch (error) {
+    console.error('Error sending PDF:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 module.exports = router;
 
 

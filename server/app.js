@@ -29,27 +29,11 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-
+app.use(express.static('public'));
 
 app.use('/contact', contactRoute);
 
 
-const serverRoot = path.resolve(__dirname);
-const clientBuildPath = path.join(serverRoot, '..', 'client', 'build');
-
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(clientBuildPath));
-
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-  });
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running..");
-  });
-}
 
 app.use((req, res, next) => {
   res.status(200).json({
