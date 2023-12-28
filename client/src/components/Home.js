@@ -66,7 +66,10 @@ const [brochureError, setBrochureError] = useState(null);
         contactNumber: '',
         emailAddress: '',
         message: '',
+        file: 'null',
       });
+
+      document.getElementById('contactForm').reset();
 
       toast.success('Thank you for contacting us. We will get back to you soon!', {
         position: 'top-right',
@@ -78,9 +81,9 @@ const [brochureError, setBrochureError] = useState(null);
       });
 
       
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+     
+      //   window.location.reload();
+      
     } catch (error) {
       console.error('Error submitting contact:', error);
 
@@ -183,7 +186,7 @@ const [brochureError, setBrochureError] = useState(null);
 
             <div className="col-md-6">
               <h3 className="contact-form-heading">Contact Us</h3>
-              <form className="contact-us" onSubmit={handleSubmit}>
+              <form id="contactForm" className="contact-us" onSubmit={handleSubmit}>
                 <div className="form-row">
                 <div className="col-md-12">
                     
@@ -257,7 +260,7 @@ const [brochureError, setBrochureError] = useState(null);
                 </div>
                 <div className="form-row">
                   <div className="col-md-12">
-                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1"                onChange={handleFileChange}
+                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1"        onChange={handleFileChange}
   />
                   </div>
                 </div>
