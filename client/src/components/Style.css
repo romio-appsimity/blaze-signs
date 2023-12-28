@@ -228,4 +228,12 @@ form.contact-us h3 {
     border-radius: 50%;
     padding: 5px;
   }
-  
+  .svg-inline--fa {
+    display: var(--fa-display, inline-block);
+    height: 1em ;
+    overflow: visible;
+    vertical-align: -11px;
+    border:  2px solid #333;
+    border-radius: 50%;
+    padding: 5px;
+}
