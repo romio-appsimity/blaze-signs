@@ -7,6 +7,7 @@ import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import downLineImage from '../imgs/down-line.png';
 import BlazeSignsLogo from '../imgs/Blaze-Signs-Logo1.png';
 import { toast, ToastContainer } from 'react-toastify';
+
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
 import Url from '../config/api';
@@ -209,35 +210,35 @@ const [brochureError, setBrochureError] = useState(null);
     </div>
 
 
-       <div class="form-row">  
-            <div class="form-group col-md-6">  
+       <div className="form-row">  
+            <div className="form-group col-md-6">  
                 
                 <input type="text" id="" name="address" placeholder="Address" value={contactDetails.address} onChange={handleInputChange}  />
              </div>   
 
-           <div class="form-group col-md-6"> 
+           <div className="form-group col-md-6"> 
               <input type="text" id="cit" name="city" placeholder="City" value={contactDetails.city} onChange={handleInputChange} />
            </div>
 
        </div>
 
-       <div class="form-row">  
-            <div class="form-group col-md-6">  
+       <div className="form-row">  
+            <div className="form-group col-md-6">  
                 <input type="text" id="" name="province" placeholder="Province" value={contactDetails.province} onChange={handleInputChange} />
              </div>   
 
-           <div class="form-group col-md-6"> 
+           <div className="form-group col-md-6"> 
               <input type="text" id="pcode" name="postalCode" placeholder="Postal Code"  value={contactDetails.postalCode} onChange={handleInputChange}/>
            </div>
 
        </div>
 
-       <div class="form-row">  
-            <div class="form-group col-md-6">  
+       <div className="form-row">  
+            <div className="form-group col-md-6">  
                 <input type="text" id="" name="contactNumber" placeholder="Contact Number" value={contactDetails.contactNumber} onChange={handleInputChange} />
              </div>   
 
-           <div class="form-group col-md-6"> 
+           <div className="form-group col-md-6"> 
               <input type="text" id="eadd" name="emailAddress" placeholder="Email Address" value={contactDetails.emailAddress} onChange={handleInputChange} />
            </div>
 
