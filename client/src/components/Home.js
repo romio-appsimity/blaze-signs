@@ -7,12 +7,13 @@ import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import downLineImage from '../imgs/down-line.png';
 import BlazeSignsLogo from '../imgs/Blaze-Signs-Logo1.png';
 import { toast, ToastContainer } from 'react-toastify';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
 import Url from '../config/api';
 
 function Home() {
+  const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [brochureError, setBrochureError] = useState(null);
 
@@ -30,6 +31,7 @@ function Home() {
     file: '',
   });
   const [errors, setErrors] = useState({});
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -97,8 +99,13 @@ function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    document.querySelector('.loading-container').style.display = 'block';
+
+
     if (!validateForm()) {
-    
+      setLoading(false);
+      document.querySelector('.loading-container').style.display = 'none';
       return;
     }
     try {
@@ -150,9 +157,11 @@ function Home() {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false); 
+      document.querySelector('.loading-container').style.display = 'none';
     }
   };
-
   const handleViewBrochure = async () => {
     try {
       const response = await axios.get(`${Url}/contact/pdf`, {
@@ -190,6 +199,7 @@ function Home() {
   return (
     <div className="App">
       <div className="outer">
+     
         <div className="container-fluid">
           <div className="row top-navi">
             <div className="col-md-5">
@@ -238,6 +248,9 @@ function Home() {
             <div className="col-md-6">
               <h3 className="contact-form-heading">Contact Us</h3>
               <form id="contactForm" className="contact-us" onSubmit={handleSubmit}>
+              <div className="loading-container" style={{ display: 'none' }}>
+                  <CircularProgress className="loader" />
+                </div>
                 <div className="form-row">
                   <div className="col-md-12">
                   <span className="error-message" style={{ color: 'red' }}>
@@ -430,6 +443,7 @@ function Home() {
           </div>
         </div>
       </div>
+     
       <ToastContainer className="custom-toast-container" />
 
     </div>
