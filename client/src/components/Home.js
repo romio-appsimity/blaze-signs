@@ -27,7 +27,8 @@ const [brochureError, setBrochureError] = useState(null);
     contactNumber: '',
     emailAddress: '',
     message: '',
-  });
+    file:''
+    });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -66,7 +67,7 @@ const [brochureError, setBrochureError] = useState(null);
         contactNumber: '',
         emailAddress: '',
         message: '',
-        file: 'null',
+        file: '',
       });
 
       document.getElementById('contactForm').reset();
@@ -260,8 +261,7 @@ const [brochureError, setBrochureError] = useState(null);
                 </div>
                 <div className="form-row">
                   <div className="col-md-12">
-                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1"        onChange={handleFileChange}
-  />
+                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1"  onChange={handleFileChange}  />
                   </div>
                 </div>
                 <div className="submit-s">
