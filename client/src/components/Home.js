@@ -14,7 +14,7 @@ import Url from '../config/api';
 
 function Home() {
   // eslint-disable-next-line
-const [brochureError, setBrochureError] = useState(null);
+  const [brochureError, setBrochureError] = useState(null);
 
   const [contactDetails, setContactDetails] = useState({
     companyName: '',
@@ -27,12 +27,67 @@ const [brochureError, setBrochureError] = useState(null);
     contactNumber: '',
     emailAddress: '',
     message: '',
-    file:''
-    });
-
+    file: '',
+  });
+  const [errors, setErrors] = useState({});
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setContactDetails({ ...contactDetails, [name]: value });
+
+   
+    if (name === 'contactNumber' || name === 'postalCode') {
+      const numericValue = value.replace(/\D/g, ''); 
+      setContactDetails({ ...contactDetails, [name]: numericValue });
+      setErrors({ ...errors, [name]: '' }); 
+    } else {
+      setContactDetails({ ...contactDetails, [name]: value });
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    const requiredFields = [
+      'companyName',
+      'firstName',
+      'lastName',
+      'address',
+      'city',
+      'province',
+      'postalCode',
+      'contactNumber',
+      'emailAddress',
+      'message',
+    ];
+
+    requiredFields.forEach((field) => {
+      if (!contactDetails[field].trim()) {
+        newErrors[field] = 'This field is required';
+      }
+    });
+
+    if (!/^\d{10}$/.test(contactDetails.contactNumber)) {
+      newErrors.contactNumber = 'Invalid contact number';
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactDetails.emailAddress)) {
+      newErrors.emailAddress = 'Invalid email address';
+    }
+
+    if (!/^\d{6}$/.test(contactDetails.postalCode)) {
+      newErrors.postalCode = 'Invalid postal code';
+    }
+    if (!contactDetails.file) {
+      newErrors.file = 'Please choose a file';
+    } else {
+     
+      const maxSize = 2 * 1024 * 1024;
+      if (contactDetails.file.size > maxSize) {
+        newErrors.file = 'File size exceeds the limit of 2MB';
+      }
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; 
   };
 
   const handleFileChange = (e) => {
@@ -42,6 +97,10 @@ const [brochureError, setBrochureError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+    
+      return;
+    }
     try {
       const formData = new FormData();
       for (const key in contactDetails) {
@@ -73,35 +132,27 @@ const [brochureError, setBrochureError] = useState(null);
       document.getElementById('contactForm').reset();
 
       toast.success('Thank you for contacting us. We will get back to you soon!', {
-        position: 'top-right',
+        className: 'custom-toast',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
       });
-
-      
-     
-      //   window.location.reload();
-      
     } catch (error) {
       console.error('Error submitting contact:', error);
 
-      toast.error('Error submitting contact', {
-        position: 'top-right',
+      toast.error('Error submitting contact. Please try again later.', {
+        className: 'custom-toast',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
       });
-      
-        window.location.reload();
-     
     }
   };
-  
+
   const handleViewBrochure = async () => {
     try {
       const response = await axios.get(`${Url}/contact/pdf`, {
@@ -109,20 +160,18 @@ const [brochureError, setBrochureError] = useState(null);
       });
 
       const blob = new Blob([response.data], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
+      const url = window.URL.createObjectURL(blob);
       window.open(url, '_blank');
     } catch (error) {
       console.error('Error viewing brochure:', error.message);
       setBrochureError('Error viewing brochure. Please try again later.');
     }
   };
-  
-  
 
   const handleDownloadBrochure = async () => {
     try {
       const response = await axios.get(`${Url}/contact/download-brochure`, {
-        responseType: 'blob', 
+        responseType: 'blob',
       });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -137,6 +186,7 @@ const [brochureError, setBrochureError] = useState(null);
       setBrochureError('Error downloading brochure. Please try again later.');
     }
   };
+
   return (
     <div className="App">
       <div className="outer">
@@ -189,79 +239,167 @@ const [brochureError, setBrochureError] = useState(null);
               <h3 className="contact-form-heading">Contact Us</h3>
               <form id="contactForm" className="contact-us" onSubmit={handleSubmit}>
                 <div className="form-row">
-                <div className="col-md-12">
+                  <div className="col-md-12">
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.companyName}
+                    </span>
+                    <input
+                      type="text"
+                      id="cname"
+                      name="companyName"
+                      placeholder="Company Name"
+                      value={contactDetails.companyName}
+                      onChange={handleInputChange}
+                    />
                     
-            <input
-              type="text"
-              id="cname"
-              name="companyName"
-              placeholder="Company Name"
-              value={contactDetails.companyName}
-              onChange={handleInputChange}
-             
-            />
-          </div>
+                  </div>
                 </div>
                 <div className="form-row">
-      <div className="form-group col-md-6">
-      <input type="text" id="fname" name="firstName" placeholder="First Name" value={contactDetails.firstName} onChange={handleInputChange} />
-      </div>
+                  <div className="form-group col-md-6">
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.firstName}
+                    </span>
+                    <input
+                      type="text"
+                      id="fname"
+                      name="firstName"
+                      placeholder="First Name"
+                      value={contactDetails.firstName}
+                      onChange={handleInputChange}
+                    />
+                    
+                  </div>
 
-      <div className="form-group col-md-6">
-      <input type="text" id="lname" name="lastName" placeholder="Last Name" value={contactDetails.lastName} onChange={handleInputChange} />
+                  <div className="form-group col-md-6">
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.lastName}
+                    </span>
+                    <input
+                      type="text"
+                      id="lname"
+                      name="lastName"
+                      placeholder="Last Name"
+                      value={contactDetails.lastName}
+                      onChange={handleInputChange}
+                    />
+                    
+                  </div>
+                </div>
 
-      </div>
-    </div>
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.address}
+                    </span>
+                    <input
+                      type="text"
+                      id=""
+                      name="address"
+                      placeholder="Address"
+                      value={contactDetails.address}
+                      onChange={handleInputChange}
+                    />
+                   
+                  </div>
 
+                  <div className="form-group col-md-6">
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.city}
+                    </span>
+                    <input
+                      type="text"
+                      id="cit"
+                      name="city"
+                      placeholder="City"
+                      value={contactDetails.city}
+                      onChange={handleInputChange}
+                    />
+                    
+                  </div>
+                </div>
 
-       <div className="form-row">  
-            <div className="form-group col-md-6">  
-                
-                <input type="text" id="" name="address" placeholder="Address" value={contactDetails.address} onChange={handleInputChange}  />
-             </div>   
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.province}
+                    </span>
+                    <input
+                      type="text"
+                      id=""
+                      name="province"
+                      placeholder="Province"
+                      value={contactDetails.province}
+                      onChange={handleInputChange}
+                    />
+                   
+                  </div>
 
-           <div className="form-group col-md-6"> 
-              <input type="text" id="cit" name="city" placeholder="City" value={contactDetails.city} onChange={handleInputChange} />
-           </div>
+                  <div className="form-group col-md-6">
+                    <span className="error-message" style={{ color: 'red' }}>
+                      {errors.postalCode}
+                    </span>
+                    <input
+                      type="tel"
+                      id="pcode"
+                      name="postalCode"
+                      placeholder="Postal Code"
+                      value={contactDetails.postalCode}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
 
-       </div>
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <span className="error-message" style={{ color: 'red' }}>
+                      {errors.contactNumber}
+                    </span>
+                    <input
+                      type="tel"
+                      id=""
+                      name="contactNumber"
+                      placeholder="Contact Number"
+                      value={contactDetails.contactNumber}
+                      onChange={handleInputChange}
+                    />
+                  </div>
 
-       <div className="form-row">  
-            <div className="form-group col-md-6">  
-                <input type="text" id="" name="province" placeholder="Province" value={contactDetails.province} onChange={handleInputChange} />
-             </div>   
-
-           <div className="form-group col-md-6"> 
-              <input type="text" id="pcode" name="postalCode" placeholder="Postal Code"  value={contactDetails.postalCode} onChange={handleInputChange}/>
-           </div>
-
-       </div>
-
-       <div className="form-row">  
-            <div className="form-group col-md-6">  
-                <input type="text" id="" name="contactNumber" placeholder="Contact Number" value={contactDetails.contactNumber} onChange={handleInputChange} />
-             </div>   
-
-           <div className="form-group col-md-6"> 
-              <input type="text" id="eadd" name="emailAddress" placeholder="Email Address" value={contactDetails.emailAddress} onChange={handleInputChange} />
-           </div>
-
-       </div>
-       <div className="form-row">
-          <div className="col-md-12">
-            <textarea
-              id="Message"
-              name="message"
-              placeholder="Message"
-              style={{ height: '100px' }}
-              value={contactDetails.message}
-              onChange={handleInputChange}
-            ></textarea>
-          </div>
+                  <div className="form-group col-md-6">
+                    <span className="error-message" style={{ color: 'red' }}>
+                      {errors.emailAddress}
+                    </span>
+                    <input
+                      type="text"
+                      id="eadd"
+                      name="emailAddress"
+                      placeholder="Email Address"
+                      value={contactDetails.emailAddress}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </div>
                 <div className="form-row">
                   <div className="col-md-12">
-                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1"  onChange={handleFileChange}  />
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.message}
+                    </span>
+                    <textarea
+                      id="Message"
+                      name="message"
+                      placeholder="Message"
+                      style={{ height: '100px' }}
+                      value={contactDetails.message}
+                      onChange={handleInputChange}
+                    ></textarea>
+                    
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="col-md-12">
+                  <span className="error-message" style={{ color: 'red' }}>
+                      {errors.file}
+                    </span>
+                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1" onChange={handleFileChange} />
                   </div>
                 </div>
                 <div className="submit-s">
@@ -277,22 +415,23 @@ const [brochureError, setBrochureError] = useState(null);
                     <img src={BlazeSignsLogo} alt="Blaze Signs Logo" />
                   </div>
                   <div>
-                    <button className="vb-button" onClick={handleViewBrochure} >
-                        View</button>
+                    <button className="vb-button" onClick={handleViewBrochure}>
+                      View
+                    </button>
                   </div>
                   <div className="vb-text"> Brochure </div>
 
-<button className="db-btn" onClick={handleDownloadBrochure}>
-  Download Brochure
-</button>
-                
+                  <button className="db-btn" onClick={handleDownloadBrochure}>
+                    Download Brochure
+             </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer className="custom-toast-container" />
+
     </div>
   );
 }
