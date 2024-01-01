@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './Style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,6 +13,7 @@ import axios from 'axios';
 import Url from '../config/api';
 
 function Home() {
+  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
   const [brochureError, setBrochureError] = useState(null);
@@ -162,20 +163,34 @@ function Home() {
       document.querySelector('.loading-container').style.display = 'none';
     }
   };
-  const handleViewBrochure = async () => {
-    try {
-      const response = await axios.get(`${Url}/contact/pdf`, {
-        responseType: 'blob',
-      });
+  useEffect(() => {
+    const loadPdfData = async () => {
+      try {
+        const response = await axios.get(`${Url}/contact/pdf`, {
+          responseType: 'blob',
+        });
 
-      const blob = new Blob([response.data], { type: 'application/pdf' });
-      const url = window.URL.createObjectURL(blob);
-      window.open(url, '_blank');
-    } catch (error) {
-      console.error('Error viewing brochure:', error.message);
-      setBrochureError('Error viewing brochure. Please try again later.');
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        setPdfBlobUrl(url);
+      } catch (error) {
+        console.error('Error loading PDF data:', error.message);
+      }
+    };
+
+    loadPdfData();
+  }, []);
+
+  const handleViewBrochure = () => {
+    if (pdfBlobUrl) {
+      const newWindow = window.open(pdfBlobUrl, '_blank');
+      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+       
+        console.warn('Please enable popups to view the document.');
+      }
     }
   };
+  
 
   const handleDownloadBrochure = async () => {
     try {
