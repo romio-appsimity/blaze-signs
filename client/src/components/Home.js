@@ -210,11 +210,11 @@ function Home() {
             <div className="col-md-7">
               <div className="logo-right-st">
                 <h5>
-                  <b>
+                 
                     We are currently working on our website.
                     <br />
                     But, we are here to provide you with our products and services.
-                  </b>
+                 
                 </h5>
                 <div className="dw-line">
                   <img src={downLineImage} alt="Divider Line" />

@@ -90,7 +90,9 @@ form.contact-us{
 
 .logo-right-st h5 {
     font-style: italic;
-    padding-top: 10px;font-size: 22px;
+    padding-top: 10px;
+    font-size: 22px;
+    font-weight: 500;
 }
 .top-navi {
     background: #edeef0;
@@ -258,7 +260,9 @@ form.contact-us h3 {
   .logo img {
       width: 100%;
   }
-  
+  .form-row {
+    display: inline;
+  }
   .logo-right-st h5 {
       font-size: 18px;
   }
@@ -269,7 +273,13 @@ form.contact-us h3 {
   .form-group input {
       width: 100%;
   }
-  
+  .outer{
+    background:url(../imgs/n1.jpg);
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+   }
   .view-broch {
       position: static;
       text-align: center;
