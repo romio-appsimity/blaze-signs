@@ -35,18 +35,58 @@ function Home() {
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-   
-    if (name === 'contactNumber' || name === 'postalCode') {
-      const numericValue = value.replace(/\D/g, ''); 
-      setContactDetails({ ...contactDetails, [name]: numericValue });
-      setErrors({ ...errors, [name]: '' }); 
-    } else {
-      setContactDetails({ ...contactDetails, [name]: value });
-      setErrors({ ...errors, [name]: '' });
+  
+    let formattedValue = value;
+  
+    if (name === 'contactNumber') {
+     
+      const isBackspace = e.nativeEvent.inputType === 'deleteContentBackward';
+      formattedValue = formatPhoneNumber(value, isBackspace);
+    } else if (name === 'postalCode') {
+      formattedValue = formatPostalCode(value);
     }
+  
+    setContactDetails({ ...contactDetails, [name]: formattedValue });
+    setErrors({ ...errors, [name]: '' });
   };
 
+  const formatPhoneNumber = (input, isBackspace) => {
+    let cleanedInput = input.replace(/\D/g, '');
+  
+    if (isBackspace) {
+      return cleanedInput.substring(0, cleanedInput.length - 1);
+    }
+  
+    if (!cleanedInput.startsWith('1')) {
+      cleanedInput = `1${cleanedInput}`;
+    }
+
+    const match = cleanedInput.match(/^(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,4})$/);
+  
+    if (match) {
+      if (match[1] && !match[2]) {
+        return `+${match[1]}`;
+      } else if (match[1] && match[2] && !match[3]) {
+        return `+${match[1]} (${match[2]}`;
+      } else if (match[1] && match[2] && match[3] && !match[4]) {
+        return `+${match[1]} (${match[2]}) ${match[3]}`;
+      } else if (match[1] && match[2] && match[3] && match[4]) {
+        return `+${match[1]} (${match[2]}) ${match[3]}-${match[4].substring(0, 4)}`;
+      }
+    }
+  
+    return input.substring(0, 17);
+  };
+  
+  
+  
+  
+
+  const formatPostalCode = (input) => {
+    const cleanedInput = input.replace(/[^a-zA-Z0-9]/g, '').substring(0, 6);
+    return cleanedInput.replace(/^([a-zA-Z]\d[a-zA-Z])?(\d[a-zA-Z]\d)$/, '$1 $2').toUpperCase();
+  };
+  
   const validateForm = () => {
     const newErrors = {};
 
@@ -69,17 +109,20 @@ function Home() {
       }
     });
 
-    if (!/^\d{10}$/.test(contactDetails.contactNumber)) {
-      newErrors.contactNumber = 'Invalid contact number';
-    }
+    
+if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumber)) {
+  newErrors.contactNumber = 'Invalid contact number';
+}
+
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactDetails.emailAddress)) {
       newErrors.emailAddress = 'Invalid email address';
     }
 
-    if (!/^\d{6}$/.test(contactDetails.postalCode)) {
-      newErrors.postalCode = 'Invalid postal code';
+    if (!/^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(contactDetails.postalCode)) {
+      newErrors.postalCode = 'Invalid postal code, Use ANA NAN format.';
     }
+
     if (!contactDetails.file) {
       newErrors.file = 'Please choose a file';
     } else {
@@ -268,9 +311,7 @@ function Home() {
                 </div>
                 <div className="form-row">
                   <div className="col-md-12">
-                  <span className="error-message" style={{ color: 'red' }}>
-                      {errors.companyName}
-                    </span>
+                 
                     <input
                       type="text"
                       id="cname"
@@ -278,15 +319,16 @@ function Home() {
                       placeholder="Company Name"
                       value={contactDetails.companyName}
                       onChange={handleInputChange}
+                      
                     />
-                    
+                     <span className="error-message" style={{ color: 'red' }}>
+                      {errors.companyName}
+                    </span>
                   </div>
                 </div>
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                  <span className="error-message" style={{ color: 'red' }}>
-                      {errors.firstName}
-                    </span>
+                 
                     <input
                       type="text"
                       id="fname"
@@ -295,13 +337,13 @@ function Home() {
                       value={contactDetails.firstName}
                       onChange={handleInputChange}
                     />
-                    
+                     <span className="error-message" style={{ color: 'red' }}>
+                      {errors.firstName}
+                    </span>
                   </div>
 
                   <div className="form-group col-md-6">
-                  <span className="error-message" style={{ color: 'red' }}>
-                      {errors.lastName}
-                    </span>
+                  
                     <input
                       type="text"
                       id="lname"
@@ -310,15 +352,15 @@ function Home() {
                       value={contactDetails.lastName}
                       onChange={handleInputChange}
                     />
-                    
+                    <span className="error-message" style={{ color: 'red' }}>
+                      {errors.lastName}
+                    </span>
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                  <span className="error-message" style={{ color: 'red' }}>
-                      {errors.address}
-                    </span>
+                  
                     <input
                       type="text"
                       id=""
@@ -327,13 +369,13 @@ function Home() {
                       value={contactDetails.address}
                       onChange={handleInputChange}
                     />
-                   
+                   <span className="error-message" style={{ color: 'red' }}>
+                      {errors.address}
+                    </span>
                   </div>
 
                   <div className="form-group col-md-6">
-                  <span className="error-message" style={{ color: 'red' }}>
-                      {errors.city}
-                    </span>
+                  
                     <input
                       type="text"
                       id="cit"
@@ -342,15 +384,15 @@ function Home() {
                       value={contactDetails.city}
                       onChange={handleInputChange}
                     />
-                    
+                    <span className="error-message" style={{ color: 'red' }}>
+                      {errors.city}
+                    </span>
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                  <span className="error-message" style={{ color: 'red' }}>
-                      {errors.province}
-                    </span>
+                  
                     <input
                       type="text"
                       id=""
@@ -359,29 +401,30 @@ function Home() {
                       value={contactDetails.province}
                       onChange={handleInputChange}
                     />
-                   
+                   <span className="error-message" style={{ color: 'red' }}>
+                      {errors.province}
+                    </span>
                   </div>
 
                   <div className="form-group col-md-6">
-                    <span className="error-message" style={{ color: 'red' }}>
-                      {errors.postalCode}
-                    </span>
+                   
                     <input
-                      type="tel"
+                      type="text"
                       id="pcode"
                       name="postalCode"
                       placeholder="Postal Code"
                       value={contactDetails.postalCode}
                       onChange={handleInputChange}
                     />
+                     <span className="error-message" style={{ color: 'red' }}>
+                      {errors.postalCode}
+                    </span>
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group col-md-6">
-                    <span className="error-message" style={{ color: 'red' }}>
-                      {errors.contactNumber}
-                    </span>
+                   
                     <input
                       type="tel"
                       id=""
@@ -390,12 +433,13 @@ function Home() {
                       value={contactDetails.contactNumber}
                       onChange={handleInputChange}
                     />
+                     <span className="error-message" style={{ color: 'red' }}>
+                      {errors.contactNumber}
+                    </span>
                   </div>
 
                   <div className="form-group col-md-6">
-                    <span className="error-message" style={{ color: 'red' }}>
-                      {errors.emailAddress}
-                    </span>
+                    
                     <input
                       type="text"
                       id="eadd"
@@ -404,13 +448,14 @@ function Home() {
                       value={contactDetails.emailAddress}
                       onChange={handleInputChange}
                     />
+                    <span className="error-message" style={{ color: 'red' }}>
+                      {errors.emailAddress}
+                    </span>
                   </div>
                 </div>
                 <div className="form-row">
                   <div className="col-md-12">
-                  <span className="error-message" style={{ color: 'red' }}>
-                      {errors.message}
-                    </span>
+                  
                     <textarea
                       id="Message"
                       name="message"
@@ -419,15 +464,18 @@ function Home() {
                       value={contactDetails.message}
                       onChange={handleInputChange}
                     ></textarea>
-                    
+                    <span className="error-message" style={{ color: 'red' }}>
+                      {errors.message}
+                    </span>
                   </div>
                 </div>
                 <div className="form-row">
                   <div className="col-md-12">
-                  <span className="error-message" style={{ color: 'red' }}>
+                  
+                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1" onChange={handleFileChange} />
+                    <span className="error-message" style={{ color: 'red' }}>
                       {errors.file}
                     </span>
-                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1" onChange={handleFileChange} />
                   </div>
                 </div>
                 <div className="submit-s">
