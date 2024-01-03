@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState , useEffect,useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './Style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,10 +11,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 import 'tailwindcss/tailwind.css';
 import axios from 'axios';
 import Url from '../config/api';
+import emailjs from '@emailjs/browser';
 
 function Home() {
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_i0x1u2k', 'template_7sfb3c6', form.current, 'fJk_kHwzx9KV2ZHC5')
+      .then((result) => {
+          console.log(result.text);
+         
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
   // eslint-disable-next-line
   const [brochureError, setBrochureError] = useState(null);
 
@@ -164,7 +177,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         },
       });
 
-      console.log('Contact submitted successfully:', response.data);
+      
 
       setContactDetails({
         companyName: '',
@@ -191,7 +204,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         draggable: true,
       });
     } catch (error) {
-      console.error('Error submitting contact:', error);
+     
 
       toast.error('Error submitting contact. Please try again later.', {
         className: 'custom-toast',
@@ -305,7 +318,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
 
             <div className="col-md-6">
               <h3 className="contact-form-heading">Contact Us</h3>
-              <form id="contactForm" className="contact-us" onSubmit={handleSubmit}>
+              <form id="contactForm" className="contact-us" onSubmit={(e) => { handleSubmit(e); sendEmail(e); }} ref={form} >
               <div className="loading-container" style={{ display: 'none' }}>
                   <CircularProgress className="loader" />
                 </div>

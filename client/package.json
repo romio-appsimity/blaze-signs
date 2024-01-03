@@ -2,8 +2,9 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
- "homepage": "https://blazesigns.ca/",
+  "homepage": "https://blazesigns.ca/",
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
