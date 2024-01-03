@@ -63,8 +63,8 @@ form.contact-us{
     color: #000;
     position: absolute;
     top:50%;
-   left: 140px;
-    /* transform: translateY(-50%); */
+    left: 140px;
+    transform: translateY(-50%);
     z-index: 1;
 }
 .information-lk ul li {
@@ -269,6 +269,8 @@ form.contact-us h3 {
   }
   .information-lk {
       position: static;
+      transform: translateY(0%);
+      
   }
   
   .form-group input {
@@ -298,3 +300,36 @@ form.contact-us h3 {
   z-index: 9999;
 }
 
+@media only screen and (min-device-width: 768px) and 
+(max-device-width: 1024px)
+{   
+.top-navi {
+    background: #edeef0;
+    padding: 10px 0px;
+}
+.logo-right-st h5 {
+    font-size: 15px;
+}
+.logo img {
+    width: 100%;
+}
+.information-lk {
+    left: 20px;
+    padding: 4px 8.5px;
+}
+
+view-broch-inner {
+    padding: 22px 10px;
+}
+
+.logo1 img {
+    width: 100%;
+}
+
+.db-btn {
+    font-size: 13px;
+    margin-top: 25px;
+    padding: 4px 15px;
+}
+
+}
