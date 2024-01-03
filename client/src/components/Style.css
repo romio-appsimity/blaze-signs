@@ -269,7 +269,8 @@ form.contact-us h3 {
   }
   .information-lk {
       position: static;
-      transform: translateY(-50%);
+      transform: translateY(0%);
+      
       
   }
   
@@ -300,73 +301,36 @@ form.contact-us h3 {
   z-index: 9999;
 }
 
-
-
-@media all and (device-width: 768px) and (device-height: 1024px) 
-and (orientation:portrait) 
-  {   
-    .top-navi {
-        background: #edeef0;
-        padding: 10px 0px;
-    }
-    .logo-right-st h5 {
-        font-size: 15px;
-    }
-    .logo img {
-        width: 100%;
-    }
-    .information-lk {
-        left: 20px;
-        padding: 4px 8.5px;
-    }
-    
-    .view-broch-inner {
-        padding: 22px 10px;
-    }
-    
-    .logo1 img {
-        width: 100%;
-    }
-    
-    .db-btn {
-        font-size: 13px;
-        margin-top: 25px;
-        padding: 4px 15px;
-    }
+@media only screen and (min-device-width: 768px) and 
+(max-device-width: 1024px)
+{   
+.top-navi {
+    background: #edeef0;
+    padding: 10px 0px;
 }
-@media all and (device-width: 1024px) and
- (device-height: 768px) and (orientation:landscape)
+.logo-right-st h5 {
+    font-size: 15px;
+}
+.logo img {
+    width: 100%;
+}
+.information-lk {
+    left: 20px;
+    padding: 4px 8.5px;
+}
 
-  {   
-    .top-navi {
-        background: #edeef0;
-        padding: 10px 0px;
-    }
-    .logo-right-st h5 {
-        font-size: 15px;
-    }
-    .logo img {
-        width: 100%;
-    }
-    .information-lk {
-        left: 20px;
-        padding: 4px 8.5px;
-    }
-    
-    .view-broch-inner {
-        padding: 22px 10px;
-    }
-    
-    .logo1 img {
-        width: 100%;
-    }
-    
-    .db-btn {
-        font-size: 13px;
-        margin-top: 25px;
-        padding: 4px 15px;
-    }
+.view-broch-inner {
+    padding: 22px 10px;
+}
 
+.logo1 img {
+    width: 100%;
+}
 
+.db-btn {
+    font-size: 13px;
+    margin-top: 25px;
+    padding: 4px 15px;
+}
 
 }
