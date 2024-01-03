@@ -270,8 +270,7 @@ form.contact-us h3 {
   .information-lk {
       position: static;
       transform: translateY(0%);
-      
-      
+    
   }
   
   .form-group input {
@@ -292,7 +291,6 @@ form.contact-us h3 {
   }
   }
 
-  
 .loading-container {
   position: fixed;
   top: 50%;
@@ -301,36 +299,112 @@ form.contact-us h3 {
   z-index: 9999;
 }
 
-@media only screen and (min-device-width: 768px) and 
-(max-device-width: 1024px)
-{   
-.top-navi {
-    background: #edeef0;
-    padding: 10px 0px;
-}
-.logo-right-st h5 {
-    font-size: 15px;
-}
-.logo img {
-    width: 100%;
-}
-.information-lk {
-    left: 20px;
-    padding: 4px 8.5px;
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .top-navi {
+      background: #edeef0;
+      padding: 10px 0px;
+  }
+  .logo-right-st h5 {
+      font-size: 15px;
+  }
+  .logo img {
+      width: 100%;
+  }
+  .information-lk {
+      left: 20px;
+      padding: 4px 8.5px;
+  }
+  
+  .view-broch-inner {
+      padding: 22px 10px;
+  }
+  
+  .logo1 img {
+      width: 100%;
+  }
+  
+  .db-btn {
+      font-size: 13px;
+      margin-top: 25px;
+      padding: 4px 15px;
+  }
+
 }
 
-.view-broch-inner {
-    padding: 22px 10px;
+/* Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+    .top-navi {
+      background: #edeef0;
+      padding: 10px 0px;
+  }
+  .logo-right-st h5 {
+      font-size: 15px;
+  }
+  .logo img {
+      width: 100%;
+  }
+  .information-lk {
+      left: 20px;
+      padding: 4px 8.5px;
+  }
+  
+  .view-broch-inner {
+      padding: 22px 10px;
+  }
+  
+  .logo1 img {
+      width: 100%;
+  }
+  
+  .db-btn {
+      font-size: 13px;
+      margin-top: 25px;
+      padding: 4px 15px;
+  }
 }
 
-.logo1 img {
-    width: 100%;
-}
+/* Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1) {
 
-.db-btn {
-    font-size: 13px;
-    margin-top: 25px;
-    padding: 4px 15px;
-}
-
+    .top-navi {
+      background: #edeef0;
+      padding: 10px 0px;
+  }
+  .logo-right-st h5 {
+      font-size: 15px;
+  }
+  .logo img {
+      width: 100%;
+  }
+  .information-lk {
+      left: 20px;
+      padding: 4px 8.5px;
+  }
+  
+  .view-broch-inner {
+      padding: 22px 10px;
+  }
+  
+  .logo1 img {
+      width: 100%;
+  }
+  
+  .db-btn {
+      font-size: 13px;
+      margin-top: 25px;
+      padding: 4px 15px;
+  }
 }
