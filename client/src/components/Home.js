@@ -20,6 +20,12 @@ function Home() {
   const sendEmail = (e) => {
     e.preventDefault();
 
+    const isValid = validateForm();
+
+    if (!isValid) {
+      
+      return;
+    }
     emailjs.sendForm('service_i0x1u2k', 'template_7sfb3c6', form.current, 'fJk_kHwzx9KV2ZHC5')
       .then((result) => {
           console.log(result.text);
@@ -160,7 +166,9 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
     document.querySelector('.loading-container').style.display = 'block';
 
 
-    if (!validateForm()) {
+    const isValid = validateForm();
+  
+    if (!isValid) {
       setLoading(false);
       document.querySelector('.loading-container').style.display = 'none';
       return;
@@ -203,6 +211,8 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         pauseOnHover: true,
         draggable: true,
       });
+
+      sendEmail(e);
     } catch (error) {
      
 
@@ -318,7 +328,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
 
             <div className="col-sm-6 col-md-6">
               <h3 className="contact-form-heading">Contact Us</h3>
-              <form id="contactForm" className="contact-us" onSubmit={(e) => { handleSubmit(e); sendEmail(e); }} ref={form} >
+              <form id="contactForm" className="contact-us" onSubmit={(e) => handleSubmit(e)} ref={form}>
               <div className="loading-container" style={{ display: 'none' }}>
                   <CircularProgress className="loader" />
                 </div>
