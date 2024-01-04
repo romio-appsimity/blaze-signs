@@ -16,6 +16,9 @@ import emailjs from '@emailjs/browser';
 function Home() {
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitButtonLabel, setSubmitButtonLabel] = useState("Submit");
+
   const form = useRef();
   const sendEmail = (e) => {
     e.preventDefault();
@@ -97,10 +100,6 @@ function Home() {
     return input.substring(0, 17);
   };
   
-  
-  
-  
-
   const formatPostalCode = (input) => {
     const cleanedInput = input.replace(/[^a-zA-Z0-9]/g, '').substring(0, 6);
     return cleanedInput.replace(/^([a-zA-Z]\d[a-zA-Z])?(\d[a-zA-Z]\d)$/, '$1 $2').toUpperCase();
@@ -162,15 +161,24 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    document.querySelector('.loading-container').style.display = 'block';
 
+    if (submitting) {
+      return;
+    }
+    setSubmitting(true);
+  
+    setLoading(true);
+    setSubmitButtonLabel("Submitting...");
+   
+    document.querySelector('.loading-container').style.display = 'block';
 
     const isValid = validateForm();
   
     if (!isValid) {
+      setSubmitting(false);
       setLoading(false);
       document.querySelector('.loading-container').style.display = 'none';
+      setSubmitButtonLabel("Submit");
       return;
     }
     try {
@@ -184,8 +192,6 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      
 
       setContactDetails({
         companyName: '',
@@ -225,8 +231,11 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         draggable: true,
       });
     } finally {
+      setSubmitting(false);
       setLoading(false); 
       document.querySelector('.loading-container').style.display = 'none';
+      setSubmitButtonLabel("Submit");
+     
     }
   };
   useEffect(() => {
@@ -257,7 +266,6 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
     }
   };
   
-
   const handleDownloadBrochure = async () => {
     try {
       const response = await axios.get(`${Url}/contact/download-brochure`, {
@@ -328,10 +336,11 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
 
             <div className="col-sm-6 col-md-6">
               <h3 className="contact-form-heading">Contact Us</h3>
-              <form id="contactForm" className="contact-us" onSubmit={(e) => handleSubmit(e)} ref={form}>
+              <form id="contactForm" className="contact-us"  onSubmit={(e) => handleSubmit(e)} ref={form}>
               <div className="loading-container" style={{ display: 'none' }}>
                   <CircularProgress className="loader" />
                 </div>
+                
                 <div className="form-row">
                   <div className="col-md-12">
                  
@@ -502,7 +511,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                   </div>
                 </div>
                 <div className="submit-s">
-                  <input type="submit" value="Submit" />
+                <input type="submit" value={submitButtonLabel} disabled={submitting} />
                 </div>
               </form>
             </div>
