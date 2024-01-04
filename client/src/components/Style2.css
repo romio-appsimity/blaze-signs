@@ -300,7 +300,44 @@ form.contact-us h3 {
   }
   }
 
+  @media only screen and (max-width: 767px) {
+  .top-navi {
+    padding: 30px 10px;
+  }
+  .logo img {
+      width: 100%;
+  }
+  .form-row {
+    display: inline;
+  }
+  .logo-right-st h5 {
+      font-size: 18px;
+      font-weight: 500;
+  }
+  .information-lk {
+      position: static;
+      transform: translateY(0%);
+    
+  }
   
+  .form-group input {
+      width: 100%;
+  }
+  .outer{
+    background:url(../imgs/n1.jpg);
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+   }
+  .view-broch {
+      position: static;
+      text-align: center;
+      margin-top: 10px;
+      transform: translate(0);
+  }
+  }
+
 
 @media only screen and (max-width: 991px) {
   .top-navi {
@@ -334,6 +371,7 @@ form.contact-us h3 {
 
 
 }
+
 @media only screen and (max-width: 1024px) {
   .top-navi {
     background: #edeef0;
@@ -351,7 +389,8 @@ form.contact-us h3 {
 }
 
 .view-broch-inner {
-    padding: 22px 10px;
+  padding: 22px 10px; 
+  max-width: calc(100% - 20px); 
 }
 
 .logo1 img {
@@ -360,7 +399,7 @@ form.contact-us h3 {
 
 .db-btn {
     font-size: 13px;
-    margin-top: 25px;
+    margin-top: 15px;
     padding: 4px 15px;
 } 
 
