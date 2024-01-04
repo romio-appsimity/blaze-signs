@@ -339,7 +339,7 @@ form.contact-us h3 {
   }
 
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 961px) {
   .top-navi {
     background: #edeef0;
     padding: 10px 0px;
@@ -368,11 +368,42 @@ form.contact-us h3 {
     margin-top: 25px;
     padding: 4px 15px;
 } 
-
-
 }
 
 @media only screen and (max-width: 1024px) {
+  .top-navi {
+    background: #edeef0;
+    padding: 10px 0px;
+}
+.logo-right-st h5 {
+    font-size: 15px;
+}
+.logo img {
+    width: 100%;
+}
+.information-lk {
+    left: 20px;
+    padding: 4px 8.5px;
+}
+
+.view-broch-inner {
+  padding: 22px 10px; 
+  max-width: calc(100% - 20px); 
+}
+
+.logo1 img {
+    width: 100%;
+}
+
+.db-btn {
+    font-size: 13px;
+    margin-top: 15px;
+    padding: 4px 15px;
+} 
+
+}
+
+@media only screen and (max-width: 1180px) {
   .top-navi {
     background: #edeef0;
     padding: 10px 0px;
