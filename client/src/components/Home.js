@@ -1,6 +1,6 @@
 import React, { useState , useEffect,useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import './Style.css';
+import './Style2.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -273,12 +273,12 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
      
         <div className="container-fluid">
           <div className="row top-navi">
-            <div className="ccol-xs-12 col-sm-5 col-md-5">
+            <div className="  col-md-5">
               <div className="logo">
                 <img src={BlazeSignsLogo} alt="Blaze Signs Logo" />
               </div>
             </div>
-            <div className="col-xs-12 col-sm-5 col-md-7">
+            <div className=" col-md-7">
               <div className="logo-right-st">
                 <h5>
                  
@@ -297,7 +297,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
 
         <div className="container-fluid">
           <div className="row second-section">
-            <div className="col-xs-12 col-sm-3 col-md-3">
+            <div className=" col-md-3">
               <div className="information-lk">
                 <ul>
                   <li>
@@ -316,7 +316,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
               </div>
             </div>
 
-            <div className="col-xs-12 col-sm-6 col-md-6">
+            <div className="col-sm-6 col-md-6">
               <h3 className="contact-form-heading">Contact Us</h3>
               <form id="contactForm" className="contact-us" onSubmit={(e) => { handleSubmit(e); sendEmail(e); }} ref={form} >
               <div className="loading-container" style={{ display: 'none' }}>
@@ -497,7 +497,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
               </form>
             </div>
 
-            <div className="col-xs-12 col-sm-3 col-md-3">
+            <div className=" col-md-3">
               <div className="view-broch">
                 <div className="view-broch-inner">
                   <div className="logo1">

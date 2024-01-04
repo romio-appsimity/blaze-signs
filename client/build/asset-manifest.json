@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.ddb4d950.css",
-    "main.js": "/static/js/main.6f3d468d.js",
+    "main.css": "/static/css/main.fc460db5.css",
+    "main.js": "/static/js/main.6375af5e.js",
     "static/js/787.d5fa4d18.chunk.js": "/static/js/787.d5fa4d18.chunk.js",
     "static/media/n1.jpg": "/static/media/n1.216f069efcb6350428d1.jpg",
     "static/media/Blaze-Signs-Logo1.png": "/static/media/Blaze-Signs-Logo1.ee406324cc0b7cd66abc.png",
     "index.html": "/index.html",
-    "main.ddb4d950.css.map": "/static/css/main.ddb4d950.css.map",
-    "main.6f3d468d.js.map": "/static/js/main.6f3d468d.js.map",
+    "main.fc460db5.css.map": "/static/css/main.fc460db5.css.map",
+    "main.6375af5e.js.map": "/static/js/main.6375af5e.js.map",
     "787.d5fa4d18.chunk.js.map": "/static/js/787.d5fa4d18.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ddb4d950.css",
-    "static/js/main.6f3d468d.js"
+    "static/css/main.fc460db5.css",
+    "static/js/main.6375af5e.js"
   ]
 }
