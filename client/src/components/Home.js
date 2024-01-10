@@ -270,7 +270,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         const url = window.URL.createObjectURL(blob);
 
         
-        openPDF(url);
+        window.open(url, '_blank');
       } catch (error) {
         console.error('Error fetching PDF:', error.message);
        
