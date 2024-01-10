@@ -261,7 +261,27 @@ form.contact-us h3 {
   z-index: 9999;
 }
 
-
+.ul.social-icons-bz{margin-bottom: 0px;}
+.social-outer{
+  background: #edeef0;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  padding: 12px;
+}
+.social-icons-bz li {
+  display: inline-flex; 
+  padding:0 5px;
+}
+.social-icons-bz li .svg-inline--fa {
+  /* background: #231f20; */
+  width: 35px;
+  height: 35px;
+  /* border-radius: 50%; */
+  text-align: center;
+  line-height: 35px;
+  color: #fff;
+}
 @media only screen and (max-width: 767px) {
   .top-navi {
       padding: 10px 10px;

@@ -2,6 +2,9 @@ import React, { useState , useEffect,useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './Style2.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import downLineImage from '../imgs/down-line.png';
@@ -536,6 +539,24 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
               </div>
             </div>
           </div>
+          <div className="row">
+  <div className="social-outer">  
+    <div col-md-12>
+      <ul className="social-icons-bz">
+        <li>
+          <a href="https://www.facebook.com/profile.php?id=61555422630131&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faFacebook} style={{ color: '#000', background: 'none', border: 'none' }} />
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/blazesigns.ca" target="_blank" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faInstagram} style={{color: '#000', background: 'none', border: 'none' }} />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
         </div>
       </div>
      
