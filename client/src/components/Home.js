@@ -526,7 +526,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                     <img src={BlazeSignsLogo} alt="Blaze Signs Logo" />
                   </div>
                   <div>
-                    <button className="vb-button" onClick={handleViewBrochure}>
+                    <button className="vb-button" onClick={() => window.open('/pdf/BlazeSigns-CompanyProfile.pdf', '_blank')}>
                       View
                     </button>
                     
@@ -545,7 +545,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
       </div>
      
       <ToastContainer className="custom-toast-container" />
-      
+
       <div className="row">
   <div className="social-outer">  
     <div col-md-12>
