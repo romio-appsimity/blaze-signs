@@ -259,14 +259,28 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
     loadPdfData();
   }, []);
 
-  const handleViewBrochure = () => {
+  const handleViewBrochure = async () => {
     if (pdfBlobUrl) {
-      const newWindow = window.open(pdfBlobUrl, '_blank');
-      if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+      try {
+        const response = await axios.get(pdfBlobUrl, {
+          responseType: 'blob',
+        });
+
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+
+        
+        openPDF(url);
+      } catch (error) {
+        console.error('Error fetching PDF:', error.message);
        
-        console.warn('Please enable popups to view the document.');
       }
     }
+  };
+
+  const openPDF = (url) => {
+    
+    window.open(url, '_blank');
   };
   
   const handleDownloadBrochure = async () => {
