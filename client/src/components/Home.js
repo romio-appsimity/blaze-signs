@@ -529,6 +529,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                     <button className="vb-button" onClick={handleViewBrochure}>
                       View
                     </button>
+                    
                   </div>
                   <div className="vb-text"> Brochure </div>
 
