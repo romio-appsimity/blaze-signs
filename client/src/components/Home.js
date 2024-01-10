@@ -540,7 +540,13 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
               </div>
             </div>
           </div>
-          <div className="row">
+         
+        </div>
+      </div>
+     
+      <ToastContainer className="custom-toast-container" />
+      
+      <div className="row">
   <div className="social-outer">  
     <div col-md-12>
       <ul className="social-icons-bz">
@@ -558,11 +564,6 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
     </div>
   </div>
 </div>
-        </div>
-      </div>
-     
-      <ToastContainer className="custom-toast-container" />
-
     </div>
   );
 }
