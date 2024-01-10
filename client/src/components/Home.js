@@ -241,6 +241,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
      
     }
   };
+  
   useEffect(() => {
     const loadPdfData = async () => {
       try {
@@ -276,11 +277,6 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
        
       }
     }
-  };
-
-  const openPDF = (url) => {
-    
-    window.open(url, '_blank');
   };
   
   const handleDownloadBrochure = async () => {
