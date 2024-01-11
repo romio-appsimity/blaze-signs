@@ -144,10 +144,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
       newErrors.postalCode = 'Invalid postal code, Use ANA NAN format.';
     }
 
-    if (!contactDetails.file) {
-      newErrors.file = 'Please choose a file';
-    } else {
-     
+    if (contactDetails.file) {
       const maxSize = 2 * 1024 * 1024;
       if (contactDetails.file.size > maxSize) {
         newErrors.file = 'File size exceeds the limit of 2MB';
@@ -558,7 +555,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
       
       <div className="row">
   <div className="social-outer">  
-    <div col-md-12>
+    <div className="col-md-12">
       <ul className="social-icons-bz">
         <li>
           <a href="https://www.facebook.com/profile.php?id=61555422630131&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">

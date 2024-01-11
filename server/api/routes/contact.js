@@ -43,9 +43,7 @@ router.post('/contacts', async (req, res) => {
       message,
     } = req.body;
 
-    if (!companyName || !firstName || !lastName || !emailAddress) {
-      return res.status(400).json({ error: 'Please fill in all required fields.' });
-    }
+   
 
     try {
       const newContact = new Contact({
@@ -59,9 +57,10 @@ router.post('/contacts', async (req, res) => {
         contactNumber,
         emailAddress,
         message,
-        file: req.file.buffer,
-        fileType: req.file.mimetype.split('/')[1],
+        file: req.file ? req.file.buffer : null,
+        fileType: req.file ? req.file.mimetype.split('/')[1] : null,
       });
+   
 
       const savedContact = await newContact.save();
 
