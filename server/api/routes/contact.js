@@ -7,6 +7,7 @@ const path = require('path');
 const storage = multer.memoryStorage();
 
 const maxFileSize = 2 * 1024 * 1024; 
+const maxFileCount = 5;
 
 const fileFilter = (req, file, cb) => {
   if (file.size > maxFileSize) {
@@ -18,18 +19,19 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: maxFileSize },
-}).single("file");
+  limits: { fileSize: maxFileSize, files: maxFileCount },
+}).array("file", maxFileCount);
 
 router.post('/contacts', async (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
       if (err.code === 'LIMIT_FILE_SIZE') {
-        return res.status(404).json({ error: 'File  exceeds the maximum size limit.' });
+        return res.status(400).json({ error: 'File size exceeds the maximum limit (2MB).' });
+      } else if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+        return res.status(400).json({ error: 'Too many files uploaded. Maximum allowed: ' + maxFileCount });
       }
       return res.status(500).json({ error: 'Internal server error.' });
     }
-
     const {
       companyName,
       firstName,
@@ -46,6 +48,11 @@ router.post('/contacts', async (req, res) => {
    
 
     try {
+      const files = req.files ? req.files.map(file => ({
+        data: file.buffer,
+        type: file.mimetype.split('/')[1],
+      })) : [];
+
       const newContact = new Contact({
         companyName,
         firstName,
@@ -57,8 +64,7 @@ router.post('/contacts', async (req, res) => {
         contactNumber,
         emailAddress,
         message,
-        file: req.file ? req.file.buffer : null,
-        fileType: req.file ? req.file.mimetype.split('/')[1] : null,
+        file:files
       });
    
 

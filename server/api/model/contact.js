@@ -13,8 +13,12 @@ const contactSchema = new mongoose.Schema({
   contactNumber: { type: String, required: true, match: /^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/ }, 
   emailAddress: { type: String, required: true, match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ }, 
   message: { type: String, required: true },
-  file: { type: Buffer, default: null }, 
-  fileType: { type: String, default: null },
+  file: [
+    {
+      data: { type: Buffer, default: null },
+      fileType: { type: String, default: null },
+    }
+  ],
 });
 
 const Contact = mongoose.model('Contact', contactSchema);

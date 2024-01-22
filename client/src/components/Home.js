@@ -54,7 +54,7 @@ function Home() {
     contactNumber: '',
     emailAddress: '',
     message: '',
-    file: '',
+    file: [],
   });
   const [errors, setErrors] = useState({});
   
@@ -144,21 +144,25 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
       newErrors.postalCode = 'Invalid postal code, Use ANA NAN format.';
     }
 
-    if (contactDetails.file) {
-      const maxSize = 2 * 1024 * 1024;
-      if (contactDetails.file.size > maxSize) {
+    const maxSize = 2 * 1024 * 1024;
+  if (contactDetails.file.length > 5) {
+    newErrors.file = 'Cannot choose more than 5 files';
+  } else {
+    contactDetails.file.forEach((file) => {
+      if (file.size > maxSize) {
         newErrors.file = 'File size exceeds the limit of 2MB';
       }
-    }
+    });
+  }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; 
   };
 
+  
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setContactDetails({ ...contactDetails, file });
+    const files = e.target.files;
+    setContactDetails({ ...contactDetails, file: [...files] });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -187,6 +191,11 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         formData.append(key, contactDetails[key]);
       }
 
+      for (let i = 0; i < contactDetails.file.length; i++) {
+        formData.append("file", contactDetails.file[i]);
+      }
+
+
       const response = await axios.post(`${Url}/contact/contacts`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -204,7 +213,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         contactNumber: '',
         emailAddress: '',
         message: '',
-        file: '',
+        file: [],
       });
 
       document.getElementById('contactForm').reset();
@@ -514,7 +523,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                 <div className="form-row">
                   <div className="col-md-12">
                   
-                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1" onChange={handleFileChange} />
+                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1" onChange={handleFileChange} multiple />
                     <span className="error-message" style={{ color: 'red' }}>
                       {errors.file}
                     </span>
