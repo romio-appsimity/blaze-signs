@@ -370,6 +370,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="Company Name"
                       value={contactDetails.companyName}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                       
                     />
                      <span className="error-message" style={{ color: 'red' }}>
@@ -387,6 +388,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="First Name"
                       value={contactDetails.firstName}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                      <span className="error-message" style={{ color: 'red' }}>
                       {errors.firstName}
@@ -402,6 +404,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="Last Name"
                       value={contactDetails.lastName}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                     <span className="error-message" style={{ color: 'red' }}>
                       {errors.lastName}
@@ -419,6 +422,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="Address"
                       value={contactDetails.address}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                    <span className="error-message" style={{ color: 'red' }}>
                       {errors.address}
@@ -434,6 +438,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="City"
                       value={contactDetails.city}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                     <span className="error-message" style={{ color: 'red' }}>
                       {errors.city}
@@ -451,6 +456,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="Province"
                       value={contactDetails.province}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                    <span className="error-message" style={{ color: 'red' }}>
                       {errors.province}
@@ -466,6 +472,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="Postal Code"
                       value={contactDetails.postalCode}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                      <span className="error-message" style={{ color: 'red' }}>
                       {errors.postalCode}
@@ -483,6 +490,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="Contact Number"
                       value={contactDetails.contactNumber}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                      <span className="error-message" style={{ color: 'red' }}>
                       {errors.contactNumber}
@@ -498,6 +506,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       placeholder="Email Address"
                       value={contactDetails.emailAddress}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     />
                     <span className="error-message" style={{ color: 'red' }}>
                       {errors.emailAddress}
@@ -514,6 +523,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       style={{ height: '100px' }}
                       value={contactDetails.message}
                       onChange={handleInputChange}
+                      disabled={submitting} 
                     ></textarea>
                     <span className="error-message" style={{ color: 'red' }}>
                       {errors.message}
@@ -523,7 +533,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                 <div className="form-row">
                   <div className="col-md-12">
                   
-                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1" onChange={handleFileChange} multiple />
+                    <input type="file" className="form-control-file form-file" id="exampleFormControlFile1" onChange={handleFileChange} multiple disabled={submitting}  />
                     <span className="error-message" style={{ color: 'red' }}>
                       {errors.file}
                     </span>
