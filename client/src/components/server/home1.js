@@ -2,8 +2,9 @@ import React, { useState , useEffect,useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './Style2.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BlazeSignsCompanyProfilePDF from './BlazeSigns-CompanyProfile.pdf';
+
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import downLineImage from '../imgs/down-line.png';
@@ -11,6 +12,8 @@ import BlazeSignsLogo from '../imgs/Blaze-Signs-Logo1.png';
 import { toast, ToastContainer } from 'react-toastify';
 import CircularProgress from '@mui/material/CircularProgress';
 import 'tailwindcss/tailwind.css';
+import axios from 'axios';
+import Url from '../config/api';
 import emailjs from '@emailjs/browser';
 
 function Home() {
@@ -29,7 +32,6 @@ function Home() {
       
       return;
     }
-    const { productService, ...formData } = contactDetails;
     emailjs.sendForm('service_i0x1u2k', 'template_7sfb3c6', form.current, 'fJk_kHwzx9KV2ZHC5')
       .then((result) => {
           console.log(result.text);
@@ -51,7 +53,6 @@ function Home() {
     postalCode: '',
     contactNumber: '',
     emailAddress: '',
-    productService:'',
     message: '',
     file: [],
   });
@@ -120,7 +121,6 @@ function Home() {
       'postalCode',
       'contactNumber',
       'emailAddress',
-      'productService',
       'message',
     ];
 
@@ -186,9 +186,22 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
       return;
     }
     try {
-      sendEmail(e);
+      const formData = new FormData();
+      for (const key in contactDetails) {
+        formData.append(key, contactDetails[key]);
+      }
 
-      
+      for (let i = 0; i < contactDetails.file.length; i++) {
+        formData.append("file", contactDetails.file[i]);
+      }
+
+
+      const response = await axios.post(`${Url}/contact/contacts`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       setContactDetails({
         companyName: '',
         firstName: '',
@@ -199,14 +212,12 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         postalCode: '',
         contactNumber: '',
         emailAddress: '',
-        productService:'',
         message: '',
         file: [],
       });
 
       document.getElementById('contactForm').reset();
 
-      
       toast.success('Thank you for contacting us. We will get back to you soon!', {
         className: 'custom-toast',
         autoClose: 3000,
@@ -215,10 +226,11 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
         pauseOnHover: true,
         draggable: true,
       });
-    } catch (error) {
-      console.error('Submission error:', error);
 
+      sendEmail(e);
+    } catch (error) {
      
+
       toast.error('Error submitting contact. Please try again later.', {
         className: 'custom-toast',
         autoClose: 5000,
@@ -232,15 +244,18 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
       setLoading(false); 
       document.querySelector('.loading-container').style.display = 'none';
       setSubmitButtonLabel("Submit");
+     
     }
   };
   
   useEffect(() => {
     const loadPdfData = async () => {
       try {
-       
-        const response = await fetch('/contact.pdf');
-        const blob = await response.blob();
+        const response = await axios.get(`${Url}/contact/pdf`, {
+          responseType: 'blob',
+        });
+
+        const blob = new Blob([response.data], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
         setPdfBlobUrl(url);
       } catch (error) {
@@ -251,21 +266,38 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
     loadPdfData();
   }, []);
 
-  const handleViewBrochure = () => {
+  const handleViewBrochure = async () => {
     if (pdfBlobUrl) {
-      window.open(pdfBlobUrl, '_blank');
+      try {
+        const response = await axios.get(pdfBlobUrl, {
+          responseType: 'blob',
+        });
+
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+
+        
+        window.open(url, '_blank');
+      } catch (error) {
+        console.error('Error fetching PDF:', error.message);
+       
+      }
     }
   };
   
-  const handleDownloadBrochure = () => {
+  const handleDownloadBrochure = async () => {
     try {
-      const brochurePath = BlazeSignsCompanyProfilePDF;
+      const response = await axios.get(`${Url}/contact/download-brochure`, {
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
-      link.href = brochurePath;
+      link.href = url;
       link.setAttribute('download', 'Blaze Signs - Company Profile.pdf');
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      link.parentNode.removeChild(link);
     } catch (error) {
       console.error('Error downloading brochure:', error.message);
       setBrochureError('Error downloading brochure. Please try again later.');
@@ -480,48 +512,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       {errors.emailAddress}
                     </span>
                   </div>
-                  <div className="form-group col-md-6">
-  <select
-    id="productService"
-    name="productService"
-    value={contactDetails.productService}
-    onChange={handleInputChange}
-    disabled={submitting}
-  >
-    <option value="">Select Product/Service</option>
-    <option value="3D Channel Letter Signs - Illuminated">3D Channel Letter Signs - Illuminated</option>
-    <option value="3D Channel Letter Signs - Non-Illuminated">3D Channel Letter Signs - Non-Illuminated</option>
-    <option value="Dimensional Cut Out Letter Signs">Dimensional Cut Out Letter Signs</option>
-    <option value="Neon Signs / LED Neon Signs">Neon Signs / LED Neon Signs</option>
-    <option value="Pylon Signs">Pylon Signs</option>
-    <option value="Light Sign Box">Light Sign Box</option>
-    <option value="Canopies / Awning">Canopies / Awning</option>
-    <option value="Indoor Door Name Plate Signs">Indoor Door Name Plate Signs</option>
-    <option value="Way Finding Signs">Way Finding Signs</option>
-    <option value="Directory Signs">Directory Signs</option>
-    <option value="Digital LED Signs - Exteior">Digital LED Signs - Exteior</option>
-    <option value="Digital Screen Signs - Exterior & Interior">Digital Screen Signs - Exterior & Interior</option>
-    <option value="Digital Window Signs - Interior">Digital Window Signs - Interior</option>
-    <option value="Exterior / Interior Metal Cladding">Exterior / Interior Metal Cladding</option>
-    <option value="Digital Print - Banner">Digital Print - Banner</option>
-    <option value="Construction Signs">Construction Signs</option>
-    <option value="Hoarding Graphics">Hoarding Graphics</option>
-    <option value="Wall Murals Graphics">Wall Murals Graphics</option>
-    <option value="Window Graphics">Window Graphics</option>
-    <option value="Indoor Graphics">Indoor Graphics</option>
-    <option value="ADA Signs">ADA Signs</option>
-    <option value="Sign Maintainence Serivce">Sign Maintainence Serivce</option>
-    <option value="Sign Cleaning Service">Sign Cleaning Service</option>
-    <option value="Promotional Products">Promotional Products</option>
-    <option value="Other Serivce's">Other Serivce's</option>
-  </select>
-  <span className="error-message" style={{ color: 'red' }}>
-    {errors.productService}
-  </span>
-</div>
-
                 </div>
-                
                 <div className="form-row">
                   <div className="col-md-12">
                   
