@@ -480,7 +480,7 @@ if (!/^\+\d{1,2}\s?\(\d{3}\)\s?\d{3}(-\d{4})?$/.test(contactDetails.contactNumbe
                       {errors.emailAddress}
                     </span>
                   </div>
-                  <div className="form-group col-md-6">
+                  <div className="form-group col-md-12">
   <select
     id="productService"
     name="productService"
